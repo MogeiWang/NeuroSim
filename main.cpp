@@ -1,5 +1,5 @@
 /*
-* Copyright (c) 2012 piluke <pikingqwerty@gmail.com>
+* Copyright (c) 2012 Luke Montalvo <pikingqwerty@gmail.com>
 *
 * This file is part of NeuroSim.
 * NeuroSim is free software and comes with ABSOLUTELY NO WARANTY.
@@ -12,7 +12,7 @@ using namespace std;
 
 int main()
 {
-    Brain br("main");
-    br.start();
+    Brain br("main"); //Ini file name
+    br.start(); //Starts brain command line
     return 0;
 }

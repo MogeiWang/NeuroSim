@@ -1,5 +1,5 @@
 /*
-* Copyright (c) 2012 piluke <pikingqwerty@gmail.com>
+* Copyright (c) 2012 Luke Montalvo <pikingqwerty@gmail.com>
 *
 * This file is part of NeuroSim.
 * NeuroSim is free software and comes with ABSOLUTELY NO WARANTY.
@@ -192,6 +192,10 @@ Brain::Brain(string f)
 			cout << "Not enough neural memory.";
 			break;
 		}
+		if (buf[0] == ';') //Ignore comments
+		{
+			continue;
+		}
 		if (buf[0] == '[') //Sections
 		{
 			memset(sec, 0, 64); //Clear section
@@ -223,7 +227,7 @@ Brain::Brain(string f)
 			}
 			else //Other sections for links
 			{
-				i = -1;
+				int i = -1;
 				for (int e=0;e<MAXMEM;e++)
 				{
 					if (neu[e].getName().compare(sec) == 0) //Finds section by name
@@ -432,7 +436,7 @@ void *parseInput(void *arg)
 		fputs((brn[b]+"@brain$ ").c_str(), stdout);
 		fflush(stdout);
 		fgets(buf, 128, stdin);
-		char cmd[8];
+		char cmd[8] = "";
 		strncpy(cmd, buf, strcspn(buf, " \n"));
 		if (strcmp(cmd, "quit") == 0)
 		{
@@ -630,22 +634,22 @@ int Brain::process()
 
 int Brain::process(int n)
 {
-    int i=0;
-    while (i<n)
-    {
-        doActive(); //Strengthen recent links and lower activity levels
-        int top = update(); //Get new thought
-        lthought = top;
-        cthought = &ngroup[top];
-        i++;
-    }
-    return 0;
+	int i=0;
+	while (i<n)
+	{
+		doActive(); //Strengthen recent links and lower activity levels
+		int top = update(); //Get new thought
+		lthought = top;
+		cthought = &ngroup[top];
+		i++;
+	}
+	return 0;
 }
 
 int Brain::start()
 {
 	pthread_t pIth;
-    pthread_create(&pIth, NULL, parseInput, NULL);
-    pthread_join(pIth, NULL);
+	pthread_create(&pIth, NULL, parseInput, NULL);
+	pthread_join(pIth, NULL);
 	return 0;
 }
