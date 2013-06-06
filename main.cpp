@@ -6,7 +6,7 @@
 * See LICENSE for more details.
 */
 
-#include "brain.h"
+#include "brain.hpp"
 
 using namespace std;
 
